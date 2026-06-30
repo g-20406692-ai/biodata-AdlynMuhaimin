@@ -1,0 +1,428 @@
+<!-- Title: Borang Hubungi Adlyn Muhaimin -->
+<!-- Filepath: contact.html -->
+<!DOCTYPE html>
+<html lang="ms">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact - Adlyn Muhaimin</title>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <style>
+        /* 1. PENYEDIAAN TEMA UNGU GELAP (PERSIS IMAGE_579F41.PNG) */
+        :root {
+            --bg-gradient: linear-gradient(135deg, #3c234d 0%, #1a162b 100%);
+            --input-bg: rgba(255, 255, 255, 0.07);
+            --input-border: rgba(255, 255, 255, 0.1);
+            --text-white: #ffffff;
+            --text-muted: #bdaec6;
+            --accent-lime: #d4ff5e; /* Warna butang hijau neon daripada imej */
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+        }
+
+        body {
+            background: var(--bg-gradient);
+            background-attachment: fixed;
+            color: var(--text-white);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* 2. MENU NAVIGASI */
+        header {
+            width: 100%;
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 30px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 26px;
+            font-weight: 800;
+            color: var(--text-white);
+            text-decoration: none;
+            letter-spacing: -0.5px;
+        }
+
+        .logo span {
+            color: #cc7aff;
+        }
+
+        nav {
+            display: flex;
+            gap: 25px;
+        }
+
+        nav a {
+            color: var(--text-muted);
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+
+        nav a:hover, nav a.active {
+            color: var(--text-white);
+        }
+
+        /* 3. KANDUNGAN UTAMA & BORANG (IMAGE_579F41.PNG) */
+        .main-wrapper {
+            max-width: 800px;
+            width: 100%;
+            margin: 20px auto;
+            padding: 0 20px 60px 20px;
+            flex-grow: 1;
+        }
+
+        .form-card {
+            background: rgba(20, 15, 30, 0.4);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            border-radius: 24px;
+            padding: 40px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+            margin-bottom: 40px;
+        }
+
+        .form-card h2 {
+            font-size: 36px;
+            font-weight: 800;
+            margin-bottom: 30px;
+            letter-spacing: -0.5px;
+        }
+
+        .form-group {
+            margin-bottom: 22px;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .form-group label {
+            font-size: 15px;
+            font-weight: 700;
+            color: var(--text-white);
+        }
+
+        .form-group input, .form-group select, .form-group textarea {
+            width: 100%;
+            background: var(--input-bg);
+            border: 1px solid var(--input-border);
+            border-radius: 14px;
+            padding: 14px 18px;
+            color: var(--text-white);
+            font-size: 15px;
+            outline: none;
+            transition: all 0.3s;
+        }
+
+        .form-group input:focus, .form-group select:focus, .form-group textarea:focus {
+            border-color: rgba(255, 255, 255, 0.3);
+            background: rgba(255, 255, 255, 0.12);
+        }
+
+        .form-group input::placeholder, .form-group textarea::placeholder {
+            color: rgba(255, 255, 255, 0.25);
+        }
+
+        /* Gaya Khusus untuk Dropdown Jantina */
+        .form-group select option {
+            background-color: #231b36;
+            color: var(--text-white);
+        }
+
+        .btn-submit {
+            background-color: var(--text-white);
+            color: #1a162b;
+            border: none;
+            border-radius: 14px;
+            padding: 14px 28px;
+            font-size: 15px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: opacity 0.3s;
+            margin-top: 10px;
+        }
+
+        .btn-submit:hover {
+            opacity: 0.9;
+        }
+
+        /* 4. SEKSYEN MAKLUM BALAS / FEEDBACK (IMAGE_57F22F.PNG) */
+        .feedback-section {
+            background: rgba(20, 15, 30, 0.4);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            border-radius: 24px;
+            padding: 30px;
+        }
+
+        .feedback-actions {
+            display: flex;
+            gap: 12px;
+            margin-bottom: 25px;
+        }
+
+        .btn-action {
+            padding: 10px 20px;
+            border-radius: 20px;
+            font-size: 13px;
+            font-weight: 700;
+            cursor: pointer;
+            border: none;
+            outline: none;
+        }
+
+        .btn-refresh {
+            background: var(--text-white);
+            color: #000;
+        }
+
+        .btn-clear {
+            background: var(--accent-lime);
+            color: #000;
+        }
+
+        /* Rupa Kad Mesej Putih Tepat Seperti Imej Kedua */
+        .message-display-area {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .msg-box {
+            background: var(--text-white);
+            color: #000000;
+            border-radius: 20px;
+            padding: 20px 25px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+
+        .msg-box .msg-name {
+            font-size: 18px;
+            font-weight: 800;
+            margin-bottom: 4px;
+            text-transform: lowercase; /* Seperti 'ali' di imej */
+        }
+
+        .msg-box .msg-meta {
+            font-size: 14px;
+            color: #333333;
+            margin-bottom: 4px;
+        }
+
+        .msg-box .msg-meta strong {
+            font-weight: 700;
+        }
+
+        .msg-box .msg-text {
+            font-size: 15px;
+            margin-bottom: 8px;
+            color: #111111;
+        }
+
+        .msg-box .msg-date {
+            font-size: 12px;
+            color: #ff8da1; /* Warna merah jambu lembut pada tarikh di imej */
+            font-weight: 600;
+        }
+
+        .no-msg {
+            color: var(--text-muted);
+            font-size: 14px;
+            text-align: center;
+            padding: 20px;
+            font-style: italic;
+        }
+
+        footer {
+            text-align: center;
+            padding: 30px;
+            color: var(--text-muted);
+            font-size: 14px;
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
+            margin-top: auto;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- NAVIGASI ATAS -->
+    <header>
+        <a href="index.html" class="logo">Ad<span>lyn.</span></a>
+        <nav>
+            <a href="index.html">Home</a>
+            <a href="profile.html">Profile</a>
+            <a href="game.html">Game</a>
+            <a href="contact.html" class="active">Contact</a>
+        </nav>
+    </header>
+
+    <!-- UTAMA: BORANG & LOGIK MAKLUM BALAS -->
+    <main class="main-wrapper">
+        
+        <!-- SEKSYEN 1: BORANG HUBUNGI (Rujukan image_579f41.png) -->
+        <section class="form-card">
+            <h2>Contact Form</h2>
+            <form id="contactForm">
+                
+                <div class="form-group">
+                    <label for="fullName">Full Name</label>
+                    <input type="text" id="fullName" placeholder="Enter your full name" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="emailAddr">Email Address</label>
+                    <input type="email" id="emailAddr" placeholder="example@email.com" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="dob">Date of Birth</label>
+                    <input type="date" id="dob" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="gender">Gender</label>
+                    <select id="gender" required>
+                        <option value="" disabled selected>Select your gender</option>
+                        <option value="Male">Male</option>
+                        <option value="Female">Female</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="message">Message to Adlyn</label>
+                    <textarea id="message" rows="4" placeholder="Write your message here..." required></textarea>
+                </div>
+
+                <button type="submit" class="btn-submit">Submit Message</button>
+            </form>
+        </section>
+
+        <!-- SEKSYEN 2: PAPARAN MAKLUM BALAS MESEJ (Rujukan image_57f22f.png) -->
+        <section class="feedback-section">
+            <div class="feedback-actions">
+                <button class="btn-action btn-refresh" id="refreshBtn">Refresh Messages</button>
+                <button class="btn-action btn-clear" id="clearBtn">Clear All Messages</button>
+            </div>
+
+            <!-- Tempat Mesej Ditampilkan Secara Dinamik -->
+            <div class="message-display-area" id="messageArea">
+                <!-- Mesej akan masuk ke sini melalui JavaScript -->
+            </div>
+        </section>
+
+    </main>
+
+    <footer>
+        <p>&copy; 2026 Adlyn Muhaimin. All Rights Reserved. Dibangunkan untuk Tugasan DELIMa.</p>
+    </footer>
+
+    <!-- 5. LOGIK ENGINE JAVASCRIPT UNTUK SIMPAN & PAPAR MESEJ -->
+    <script>
+        const contactForm = document.getElementById('contactForm');
+        const messageArea = document.getElementById('messageArea');
+        const refreshBtn = document.getElementById('refreshBtn');
+        const clearBtn = document.getElementById('clearBtn');
+
+        // Fungsi Membaca Mesej dari LocalStorage dan Memaparkannya
+        function displayMessages() {
+            messageArea.innerHTML = ''; // Kosongkan paparan lama
+            
+            // Ambil data senarai mesej (jika ada)
+            let messages = JSON.parse(localStorage.getItem('adlynMessages')) || [];
+
+            if (messages.length === 0) {
+                messageArea.innerHTML = '<div class="no-msg">Tiada mesej dijumpai. Sila isi borang di atas untuk menghantar mesej!</div>';
+                return;
+            }
+
+            // Pusing dan paparkan setiap mesej (Mesej terbaru di atas sekali)
+            messages.forEach(msg => {
+                const msgBox = document.createElement('div');
+                msgBox.className = 'msg-box';
+                
+                msgBox.innerHTML = `
+                    <div class="msg-name">${msg.name}</div>
+                    <div class="msg-meta">Gender: ${msg.gender}</div>
+                    <div class="msg-text">${msg.text}</div>
+                    <div class="msg-date">${msg.timestamp}</div>
+                `;
+                
+                messageArea.appendChild(msgBox);
+            });
+        }
+
+        // Event Pengendali Hantar Borang (Submit Form)
+        contactForm.addEventListener('submit', function(e) {
+            e.preventDefault(); // Mengelakkan skrin daripada memuat semula secara lalai
+
+            // Ambil nilai dari input form
+            const nameValue = document.getElementById('fullName').value;
+            const emailValue = document.getElementById('emailAddr').value;
+            const dobValue = document.getElementById('dob').value;
+            const genderValue = document.getElementById('gender').value;
+            const messageValue = document.getElementById('message').value;
+
+            // Format tarikh dan masa masa kini seperti susunan imej (M/D/YYYY, H:MM:SS AM/PM)
+            const now = new Date();
+            const timestampStr = now.toLocaleString('en-US', { 
+                hour: '2-digit', 
+                minute: '2-digit', 
+                second: '2-digit', 
+                hour12: true 
+            }).replace(/^0/, '');
+            
+            const dateStr = `${now.getMonth() + 1}/${now.getDate()}/${now.getFullYear()}`;
+            const fullFormattedDate = `${dateStr}, ${timestampStr}`;
+
+            // Sediakan objek data mesej baharu
+            const newMessage = {
+                name: nameValue,
+                email: emailValue,
+                dob: dobValue,
+                gender: genderValue,
+                text: messageValue,
+                timestamp: fullFormattedDate
+            };
+
+            // Dapatkan senarai sedia ada, masukkan yang baharu di kedudukan teratas
+            let currentMessages = JSON.parse(localStorage.getItem('adlynMessages')) || [];
+            currentMessages.unshift(newMessage);
+
+            // Simpan semula ke dalam Storage pelayar web
+            localStorage.setItem('adlynMessages', JSON.stringify(currentMessages));
+
+            // Reset borang kosong semula
+            contactForm.reset();
+
+            // Kemas kini paparan senarai kad mesej di bawah
+            displayMessages();
+        });
+
+        // Event untuk butang Refresh
+        refreshBtn.addEventListener('click', displayMessages);
+
+        // Event untuk butang Clear All Messages
+        clearBtn.addEventListener('click', function() {
+            if(confirm("Adakah anda pasti mahu memadam semua mesej?")) {
+                localStorage.removeItem('adlynMessages');
+                displayMessages();
+            }
+        });
+
+        // Jalankan paparan mesej secara automatik apabila halaman dibuka
+        displayMessages();
+    </script>
+</body>
+</html>

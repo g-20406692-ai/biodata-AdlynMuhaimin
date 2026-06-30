@@ -1,0 +1,454 @@
+<!DOCTYPE html>
+<html lang="ms">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Profile - Adlyn Muhaimin</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    
+    <style>
+        /* 1. SETUP ASAS & WARNA TEMA (SAMA SEPERTI PAGE AWAL) */
+        :root {
+            --bg-color: #0d0e12;         /* 60% Dominan: Gelap pekat */
+            --card-bg: #16171d;          /* Warna kad latar belakang */
+            --accent-color: #ff7a59;     /* 10% Aksyen: Jingga/Coral */
+            --text-main: #ffffff;        /* Putih bersih */
+            --text-muted: #94a3b8;       /* Kelabu lembut untuk huraian */
+            --gradient-accent: linear-gradient(135deg, #ff7a59, #ff512f);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            transition: all 0.3s ease;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            overflow-x: hidden;
+            /* Kesan cahaya/glow bulat yang SAMA EXACT macam page awal */
+            background-image: radial-gradient(circle at 80% 20%, rgba(255, 122, 89, 0.08) 0%, transparent 50%),
+                              radial-gradient(circle at 10% 80%, rgba(139, 92, 246, 0.06) 0%, transparent 50%);
+        }
+
+        /* 2. MENU NAVIGASI */
+        header {
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 30px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 10;
+        }
+
+        .logo {
+            font-size: 28px;
+            font-weight: 700;
+            letter-spacing: -0.5px;
+            color: var(--text-main);
+            text-decoration: none;
+        }
+
+        .logo span {
+            color: var(--accent-color);
+        }
+
+        nav {
+            display: flex;
+            gap: 30px;
+            align-items: center;
+        }
+
+        nav a {
+            color: var(--text-muted);
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 16px;
+        }
+
+        nav a:hover, nav a.active {
+            color: var(--text-main);
+        }
+
+        /* 3. SUSUN ATUR UTAMA (PROFILE CONTAINER) */
+        .profile-container {
+            max-width: 1200px;
+            width: 100%;
+            margin: 0 auto;
+            padding: 20px 20px 50px 20px;
+            flex-grow: 1;
+        }
+
+        .profile-header-section {
+            text-align: center;
+            margin-bottom: 50px;
+            margin-top: 20px;
+        }
+
+        .profile-header-section h2 {
+            font-size: 42px;
+            font-weight: 700;
+            margin-bottom: 12px;
+            letter-spacing: -1px;
+        }
+
+        .profile-header-section p {
+            color: var(--text-muted);
+            font-size: 16px;
+        }
+
+        /* 4. REKABENTUK KOTAK GRID */
+        .grid-layout {
+            display: grid;
+            grid-template-columns: repeat(6, 1fr);
+            gap: 25px;
+        }
+
+        /* Struktur Kad Maklumat */
+        .info-card {
+            background-color: var(--card-bg);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .info-card:hover {
+            transform: translateY(-5px);
+            border-color: rgba(255, 122, 89, 0.3);
+            box-shadow: 0 25px 45px rgba(255, 122, 89, 0.05);
+        }
+
+        .card-icon {
+            width: 45px;
+            height: 45px;
+            background: rgba(255, 122, 89, 0.1);
+            color: var(--accent-color);
+            border-radius: 12px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 20px;
+            margin-bottom: 20px;
+        }
+
+        .card-title {
+            font-size: 20px;
+            font-weight: 600;
+            margin-bottom: 20px;
+            color: var(--text-main);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+            padding-bottom: 10px;
+        }
+
+        /* DATA DALAM KAD */
+        .info-item {
+            margin-bottom: 16px;
+        }
+
+        .info-item:last-child {
+            margin-bottom: 0;
+        }
+
+        .info-label {
+            font-size: 11px;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 4px;
+        }
+
+        .info-value {
+            font-size: 15px;
+            font-weight: 500;
+            color: var(--text-main);
+            line-height: 1.4;
+        }
+
+        /* Sub-senarai timeline pendidikan */
+        .edu-timeline {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            margin-top: 10px;
+        }
+
+        .edu-node {
+            position: relative;
+            padding-left: 15px;
+            border-left: 2px solid rgba(255, 122, 89, 0.3);
+        }
+
+        .edu-node .year {
+            font-size: 12px;
+            color: var(--accent-color);
+            font-weight: 600;
+        }
+
+        .edu-node .school {
+            font-size: 14px;
+            font-weight: 500;
+            color: var(--text-main);
+        }
+
+        /* --- CONFIGURATION POSISI 5 KOTAK --- */
+        
+        /* Kotak 1: Personal Information (Ambil 3 Lajur) */
+        .kotak-personal {
+            grid-column: span 3;
+        }
+
+        /* Kotak 2: Education (Ambil 3 Lajur) */
+        .kotak-education {
+            grid-column: span 3;
+        }
+
+        /* Kotak 3: Achievements (Ambil 3 Lajur) */
+        .kotak-achievements {
+            grid-column: span 3;
+        }
+
+        /* Kotak 4: Language Skills (Ambil 1.5 Lajur) */
+        .kotak-language {
+            grid-column: span 1.5;
+        }
+
+        /* Kotak 5: Technical Skills (Ambil 1.5 Lajur) */
+        .kotak-technical {
+            grid-column: span 1.5;
+        }
+
+        /* Senarai Bergaya untuk Achievements */
+        .achievement-list {
+            list-style: none;
+        }
+
+        .achievement-list li {
+            position: relative;
+            padding-left: 28px;
+            margin-bottom: 16px;
+            font-size: 15px;
+            line-height: 1.4;
+        }
+
+        .achievement-list li:last-child {
+            margin-bottom: 0;
+        }
+
+        .achievement-list li::before {
+            content: "\f058"; /* Ikon check circle FontAwesome */
+            font-family: "Font Awesome 6 Free";
+            font-weight: 900;
+            position: absolute;
+            left: 0;
+            top: 2px;
+            color: var(--accent-color);
+        }
+
+        /* Paparan Kemahiran (Pill Badge Style) */
+        .skill-badge-container {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .skill-badge-item {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            padding: 10px 14px;
+            border-radius: 10px;
+            font-size: 14px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .skill-badge-item span.level {
+            font-size: 11px;
+            background: var(--gradient-accent);
+            color: white;
+            padding: 2px 8px;
+            border-radius: 20px;
+            font-weight: 600;
+        }
+
+        /* Footer Halaman */
+        footer {
+            text-align: center;
+            padding: 30px;
+            color: var(--text-muted);
+            font-size: 14px;
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
+            margin-top: 60px;
+        }
+
+        /* Responsif untuk Telefon */
+        @media (max-width: 900px) {
+            .grid-layout {
+                grid-template-columns: 1fr;
+            }
+            .kotak-personal, .kotak-education, .kotak-achievements, .kotak-language, .kotak-technical {
+                grid-column: span 1;
+            }
+            header {
+                flex-direction: column;
+                gap: 20px;
+            }
+            .profile-header-section h2 {
+                font-size: 32px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <a href="index.html" class="logo">Ad<span>lyn.</span></a>
+        <nav>
+            <a href="index.html">Home</a>
+            <a href="profile.html" class="active">Profile</a>
+            <a href="game.html">Game</a>
+            <a href="contact.html">Contact</a>
+        </nav>
+    </header>
+
+    <main class="profile-container">
+        
+        <div class="profile-header-section">
+            <h2>Mengenai Diri Saya</h2>
+            <p>Butiran akademik, kemahiran, dan pencapaian rasmi sepanjang pengajian.</p>
+        </div>
+
+        <div class="grid-layout">
+            
+            <div class="info-card kotak-personal">
+                <div class="card-icon"><i class="fa-solid fa-user"></i></div>
+                <h3 class="card-title">Personal Information</h3>
+                
+                <div class="info-item">
+                    <div class="info-label">Nama Penuh</div>
+                    <div class="info-value">MUHAMMAD ADLYN MUHAIMIN BIN NORAZMEL</div>
+                </div>
+                
+                <div class="info-item">
+                    <div class="info-label">Alamat Emel</div>
+                    <div class="info-value" style="color: var(--accent-color);">adlynmin4@gmail.com</div>
+                </div>
+                
+                <div class="info-item">
+                    <div class="info-label">Program Pengajian</div>
+                    <div class="info-value">Diploma in Electronic Engineering (Internet of Things)</div>
+                </div>
+                
+                <div class="info-item">
+                    <div class="info-label">Institusi</div>
+                    <div class="info-value">KKTM Petaling Jaya</div>
+                </div>
+            </div>
+
+            <div class="info-card kotak-education">
+                <div class="card-icon"><i class="fa-solid fa-graduation-cap"></i></div>
+                <h3 class="card-title">Education</h3>
+                
+                <div class="info-item">
+                    <div class="info-label">Pendidikan Tinggi</div>
+                    <div class="info-value">Diploma in Electronic Engineering (IoT)<br><span style="font-size: 13px; color: var(--text-muted);">KKTM Petaling Jaya</span></div>
+                </div>
+                
+                <div class="info-item">
+                    <div class="info-label">Pendidikan Menengah</div>
+                    <div class="edu-timeline">
+                        <div class="edu-node">
+                            <div class="year">2023 - 2024</div>
+                            <div class="school">Sekolah Menengah Kebangsaan Seri Saujana</div>
+                        </div>
+                        <div class="edu-node">
+                            <div class="year">2021 - 2023</div>
+                            <div class="school">Sekolah Menengah Kebangsaan Dharma</div>
+                        </div>
+                        <div class="edu-node">
+                            <div class="year">2020 - 2021</div>
+                            <div class="school">Victoria Institution</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="info-card kotak-achievements">
+                <div class="card-icon"><i class="fa-solid fa-trophy"></i></div>
+                <h3 class="card-title">Achievements</h3>
+                
+                <ul class="achievement-list">
+                    <li>
+                        <strong>Semester 1</strong> 
+                        <span style="color: var(--accent-color); font-weight: 600; margin-left: 5px;">GPA: 3.24</span>
+                    </li>
+                    <li>
+                        <strong>Semester 2</strong> 
+                        <span style="color: #10b981; font-weight: 600; margin-left: 5px;">GPA: 3.74</span> (Anugerah Cemerlang)
+                    </li>
+                    <li>
+                        <strong>Sijil Pelajaran Malaysia (SPM)</strong> 
+                        <span style="font-weight: 600; margin-left: 5px;">Keputusan: 5A</span>
+                    </li>
+                </ul>
+            </div>
+
+            <div class="info-card kotak-language">
+                <div class="card-icon"><i class="fa-solid fa-language"></i></div>
+                <h3 class="card-title">Languages</h3>
+                
+                <div class="skill-badge-container">
+                    <div class="skill-badge-item">
+                        <span>Malay</span>
+                        <span class="level">Native</span>
+                    </div>
+                    <div class="skill-badge-item">
+                        <span>English</span>
+                        <span class="level">Fluent</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="info-card kotak-technical">
+                <div class="card-icon"><i class="fa-solid fa-laptop-code"></i></div>
+                <h3 class="card-title">Technical Skills</h3>
+                
+                <div class="skill-badge-container">
+                    <div class="skill-badge-item">
+                        <span>IoT Systems</span>
+                    </div>
+                    <div class="skill-badge-item">
+                        <span>HTML5</span>
+                    </div>
+                    <div class="skill-badge-item">
+                        <span>CSS3</span>
+                    </div>
+                    <div class="skill-badge-item">
+                        <span>Canva Design</span>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </main>
+
+    <footer>
+        <p>&copy; 2026 Adlyn Muhaimin. All Rights Reserved. Dibangunkan untuk Tugasan DELIMa.</p>
+    </footer>
+
+</body>
+</html>

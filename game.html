@@ -1,0 +1,456 @@
+<!DOCTYPE html>
+<html lang="ms">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Game - Adlyn Muhaimin</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&family=Press+Start+2P&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    
+    <style>
+        /* 1. SETUP TEMA GELAP PREMIUM */
+        :root {
+            --bg-color: #0d0e12;
+            --card-bg: #16171d;
+            --accent-color: #ff7a59;
+            --text-main: #ffffff;
+            --text-muted: #94a3b8;
+            --game-field: #1e7e34; /* Warna hijau padang seperti dalam gambar */
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            overflow-x: hidden;
+            background-image: radial-gradient(circle at 50% 30%, rgba(255, 122, 89, 0.06) 0%, transparent 50%);
+        }
+
+        /* 2. MENU NAVIGASI */
+        header {
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 30px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 28px;
+            font-weight: 700;
+            letter-spacing: -0.5px;
+            color: var(--text-main);
+            text-decoration: none;
+        }
+
+        .logo span {
+            color: var(--accent-color);
+        }
+
+        nav {
+            display: flex;
+            gap: 30px;
+            align-items: center;
+        }
+
+        nav a {
+            color: var(--text-muted);
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 16px;
+            transition: color 0.3s;
+        }
+
+        nav a:hover, nav a.active {
+            color: var(--text-main);
+        }
+
+        /* 3. KONSOL GAME UTAMA */
+        .game-container {
+            max-width: 1000px;
+            width: 100%;
+            margin: 20px auto cubic-bezier(0.4, 0, 0.2, 1);
+            padding: 0 20px 50px 20px;
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .game-title-section {
+            text-align: center;
+            margin-bottom: 25px;
+        }
+
+        .game-title-section h2 {
+            font-size: 32px;
+            font-weight: 700;
+            margin-bottom: 5px;
+        }
+
+        .game-title-section p {
+            color: var(--text-muted);
+            font-size: 14px;
+        }
+
+        /* Bingkai Monitor Arked */
+        .arcade-cabinet {
+            background-color: var(--card-bg);
+            border: 4px solid #2a2b36;
+            border-radius: 24px;
+            padding: 20px;
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.5), 0 0 30px rgba(255, 122, 89, 0.05);
+            width: 100%;
+            max-width: 740px;
+        }
+
+        /* Canvas Game (Padang Hijau) */
+        canvas {
+            background-color: var(--game-field);
+            display: block;
+            margin: 0 auto;
+            border-radius: 12px;
+            box-shadow: inset 0 0 20px rgba(0,0,0,0.4);
+            border: 3px solid #111;
+            max-width: 100%;
+            height: auto;
+        }
+
+        /* 4. BUTANG KAWALAN (Ikut Gambar Ragam Kiri & Kanan) */
+        .controls-wrapper {
+            display: flex;
+            justify-content: space-between;
+            width: 100%;
+            max-width: 700px;
+            margin-top: 20px;
+            padding: 0 10px;
+        }
+
+        .control-block {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            align-items: center;
+        }
+
+        .control-label {
+            font-size: 11px;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-weight: 600;
+        }
+
+        .btn-ctrl {
+            width: 60px;
+            height: 60px;
+            background: #222430;
+            border: 2px solid #3b3e54;
+            color: white;
+            border-radius: 15px;
+            font-size: 24px;
+            cursor: pointer;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            user-select: none;
+            box-shadow: 0 5px 0 #11121a;
+        }
+
+        .btn-ctrl:active {
+            transform: translateY(3px);
+            box-shadow: 0 2px 0 #11121a;
+        }
+
+        /* Petunjuk Cara Main Desktop */
+        .instructions {
+            margin-top: 25px;
+            font-size: 13px;
+            color: var(--text-muted);
+            background: rgba(255, 255, 255, 0.02);
+            padding: 10px 20px;
+            border-radius: 30px;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            text-align: center;
+        }
+
+        footer {
+            text-align: center;
+            padding: 30px;
+            color: var(--text-muted);
+            font-size: 14px;
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
+            margin-top: 40px;
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <a href="index.html" class="logo">Ad<span>lyn.</span></a>
+        <nav>
+            <a href="index.html">Home</a>
+            <a href="profile.html">Profile</a>
+            <a href="game.html" class="active">Game</a>
+            <a href="contact.html">Contact</a>
+        </nav>
+    </header>
+
+    <main class="game-container">
+        <div class="game-title-section">
+            <h2>Retro Arked Cyber</h2>
+            <p>Gerakkan karakter anda untuk kalahkan Bot Opponent!</p>
+        </div>
+
+        <div class="arcade-cabinet">
+            <canvas id="retroGame" width="700" height="380"></canvas>
+
+            <div class="controls-wrapper">
+                <div class="control-block">
+                    <span class="control-label">Left Controls</span>
+                    <button class="btn-ctrl" id="btnUp"><i class="fa-solid fa-arrow-up"></i></button>
+                    <button class="btn-ctrl" id="btnDown"><i class="fa-solid fa-arrow-down"></i></button>
+                </div>
+
+                <div class="control-block">
+                    <span class="control-label">Right Controls</span>
+                    <div class="btn-ctrl" style="opacity: 0.5; cursor: not-allowed;"><i class="fa-solid fa-repeat"></i></div>
+                    <button class="btn-ctrl" id="btnReset" style="background-color: #3b2323; border-color: #e15555; color: #ff8888;" title="Reset Game"><i class="fa-solid fa-rotate-left"></i></button>
+                </div>
+            </div>
+        </div>
+
+        <div class="instructions">
+            <i class="fa-solid fa-keyboard"></i> <strong>Saranan Desktop:</strong> Guna kekunci <strong>W</strong> (Atas) dan <strong>S</strong> (Bawah) untuk kawalan lebih laju!
+        </div>
+    </main>
+
+    <footer>
+        <p>&copy; 2026 Adlyn Muhaimin. All Rights Reserved. Dibangunkan untuk Tugasan DELIMa.</p>
+    </footer>
+
+    <script>
+        const canvas = document.getElementById("retroGame");
+        const ctx = canvas.getContext("2d");
+
+        // Rekabentuk Objek Bola (Ball Merah seperti di gambar)
+        const ball = {
+            x: canvas.width / 2,
+            y: canvas.height / 2,
+            radius: 10,
+            speed: 4,
+            dx: 4,
+            dy: 4,
+            color: "#ff3333"
+        };
+
+        // Rekabentuk Karakter Pemain Kiri (Player)
+        const player = {
+            x: 30,
+            y: canvas.height / 2 - 40,
+            width: 15,
+            height: 80,
+            score: 0,
+            color: "#ff7a59",
+            speed: 6
+        };
+
+        // Rekabentuk Karakter Pemain Kanan (Opponent / AI Bot)
+        const opponent = {
+            x: canvas.width - 45,
+            y: canvas.height / 2 - 40,
+            width: 15,
+            height: 80,
+            score: 0,
+            color: "#4ade80",
+            speed: 3.5
+        };
+
+        // Status Keyboard Kawalan
+        let upPressed = false;
+        let downPressed = false;
+
+        // Event Listener Papan Kekunci
+        document.addEventListener("keydown", (e) => {
+            if (e.key === "w" || e.key === "W" || e.key === "ArrowUp") upPressed = true;
+            if (e.key === "s" || e.key === "S" || e.key === "ArrowDown") downPressed = true;
+        });
+
+        document.addEventListener("keyup", (e) => {
+            if (e.key === "w" || e.key === "W" || e.key === "ArrowUp") upPressed = false;
+            if (e.key === "s" || e.key === "S" || e.key === "ArrowDown") downPressed = false;
+        });
+
+        // Event Listener Butang Skrin (Sentuhan/Klik Tetikus)
+        const btnUp = document.getElementById("btnUp");
+        const btnDown = document.getElementById("btnDown");
+        const btnReset = document.getElementById("btnReset");
+
+        btnUp.addEventListener("mousedown", () => upPressed = true);
+        btnUp.addEventListener("mouseup", () => upPressed = false);
+        btnUp.addEventListener("mouseleave", () => upPressed = false);
+        btnUp.addEventListener("touchstart", (e) => { e.preventDefault(); upPressed = true; });
+        btnUp.addEventListener("touchend", () => upPressed = false);
+
+        btnDown.addEventListener("mousedown", () => downPressed = true);
+        btnDown.addEventListener("mouseup", () => downPressed = false);
+        btnDown.addEventListener("mouseleave", () => downPressed = false);
+        btnDown.addEventListener("touchstart", (e) => { e.preventDefault(); downPressed = true; });
+        btnDown.addEventListener("touchend", () => downPressed = false);
+
+        btnReset.addEventListener("click", () => {
+            player.score = 0;
+            opponent.score = 0;
+            resetBall();
+        });
+
+        // Fungsi Set Semula Bola
+        function resetBall() {
+            ball.x = canvas.width / 2;
+            ball.y = canvas.height / 2;
+            ball.dx = -ball.dx; // Tukar arah servis
+            ball.speed = 4;
+        }
+
+        // Melukis Garis Putus-putus Tengah Padang
+        function drawNet() {
+            ctx.strokeStyle = "rgba(255, 255, 255, 0.4)";
+            ctx.lineWidth = 4;
+            ctx.setLineDash([10, 10]);
+            ctx.beginPath();
+            ctx.moveTo(canvas.width / 2, 0);
+            ctx.lineTo(canvas.width / 2, canvas.height);
+            ctx.stroke();
+            ctx.setLineDash([]); // Reset semula acuan line biasa
+        }
+
+        // Melukis Papan Markah Bergaya Retro Digital
+        function drawScore() {
+            ctx.fillStyle = "#ffffff";
+            ctx.font = "24px 'Press Start 2P', monospace";
+            // Markah Kiri (Player)
+            ctx.fillText(player.score, canvas.width / 2 - 70, 45);
+            // Markah Kanan (Opponent)
+            ctx.fillText(opponent.score, canvas.width / 2 + 40, 45);
+        }
+
+        // Mengesan Pelanggaran Bola dengan Karakter Pemain
+        function collision(b, p) {
+            return b.x + b.radius > p.x && b.x - b.radius < p.x + p.width &&
+                   b.y + b.radius > p.y && b.y - b.radius < p.y + p.height;
+        }
+
+        // UPDATE POSISI DAN LOGIK GAMEPLAY
+        function update() {
+            // Pergerakan Player Manusia
+            if (upPressed && player.y > 0) {
+                player.y -= player.speed;
+            }
+            if (downPressed && player.y < canvas.height - player.height) {
+                player.y += player.speed;
+            }
+
+            // Pergerakan Pintar Bot Opponent (AI mengikut arah Y bola)
+            let opponentTarget = ball.y - (opponent.height / 2);
+            opponent.y += (opponentTarget - opponent.y) * 0.08; // Kesan delay kelajuan respons AI
+            
+            // Halang Opponent terkeluar sempadan
+            if (opponent.y < 0) opponent.y = 0;
+            if (opponent.y > canvas.height - opponent.height) opponent.y = canvas.height - opponent.height;
+
+            // Pergerakan Bola
+            ball.x += ball.dx;
+            ball.y += ball.dy;
+
+            // Bola melantun dinding atas dan bawah
+            if (ball.y - ball.radius < 0 || ball.y + ball.radius > canvas.height) {
+                ball.dy = -ball.dy;
+            }
+
+            // Tentukan siapa yang terkena bola (Kiri atau Kanan)
+            let currentPaddle = (ball.x < canvas.width / 2) ? player : opponent;
+
+            if (collision(ball, currentPaddle)) {
+                // Kira titik impak lantunan sudut
+                let collidePoint = ball.y - (currentPaddle.y + currentPaddle.height / 2);
+                collidePoint = collidePoint / (currentPaddle.height / 2);
+                
+                let angleRad = collidePoint * (Math.PI / 4);
+                let direction = (ball.x < canvas.width / 2) ? 1 : -1;
+
+                // Tukar halaju bola & naikkan speed sikit demi sikit
+                ball.dx = direction * ball.speed * Math.cos(angleRad);
+                ball.dy = ball.speed * Math.sin(angleRad);
+                ball.speed += 0.2; 
+            }
+
+            // Kira Markah / Skor Gol Semat
+            if (ball.x - ball.radius < 0) {
+                opponent.score++;
+                resetBall();
+            } else if (ball.x + ball.radius > canvas.width) {
+                player.score++;
+                resetBall();
+            }
+        }
+
+        // LUKIS SEMUA ELEMEN KE SKRIN
+        function draw() {
+            // Bersihkan kanvas lama
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+            // 1. Lukis Padang Net Tengah
+            drawNet();
+
+            // 2. Lukis Papan Skor
+            drawScore();
+
+            // 3. Lukis Player Kiri (Warna Jingga Premium)
+            ctx.fillStyle = player.color;
+            ctx.fillRect(player.x, player.y, player.width, player.height);
+
+            // Tambah Label Teks "Player" kecil di atas paddle
+            ctx.fillStyle = "rgba(255,255,255,0.7)";
+            ctx.font = "10px Arial";
+            ctx.fillText("Player", player.x - 5, player.y - 8);
+
+            // 4. Lukis Opponent Kanan (Warna Hijau Cyber)
+            ctx.fillStyle = opponent.color;
+            ctx.fillRect(opponent.x, opponent.y, opponent.width, opponent.height);
+            
+            // Tambah Label Teks "Opponent" kecil di atas paddle
+            ctx.fillStyle = "rgba(255,255,255,0.7)";
+            ctx.fillText("Opponent", opponent.x - 15, opponent.y - 8);
+
+            // 5. Lukis Bola Merah
+            ctx.fillStyle = ball.color;
+            ctx.beginPath();
+            ctx.arc(ball.x, ball.y, ball.radius, 0, Math.PI * 2);
+            ctx.fill();
+        }
+
+        // Kitaran Loop Utama Game (Game Loop)
+        function gameLoop() {
+            update();
+            draw();
+            requestAnimationFrame(gameLoop);
+        }
+
+        // Mula Jalankan Game!
+        gameLoop();
+    </script>
+</body>
+</html>
